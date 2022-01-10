@@ -7,13 +7,13 @@ let bot = new Client({
   presence: {
     status: 'online',
     activity: {
-      name: `${config.prefix}help`,
-      type: 'LISTENING'
+      name: `everyone`,
+      type: 'WATCHING',
     }
   }
 });
 
-bot.on('ready', () => console.log(`Logged in as ${bot.user.tag}.`));
+bot.once('ready', () => console.log(`Logged in as ${bot.user.tag}.`));
 
 bot.on('message', async message => {
   // Check for command
@@ -65,6 +65,20 @@ bot.on('message', async message => {
         }
         message.channel.send(embed);
         break;
+    }
+  } else if (message.author != bot.user) {
+    // Forbidden word check
+    let blacklisted = ['gay', 'g a y', 'g-a-y', 'g_a_y', 'g.a.y', 'ogay'];
+    let replacementWords = ['sure', 'ok', 'can', 'k', 'okay', 'orh'];
+
+    for (var i in blacklisted) {
+      if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
+        await message.delete();
+        await message.reply(replacementWords[Math.floor(Math.random() * replacementWords.length)]);
+        console.log(message.author + " is vulgar");
+        
+        break;
+      }
     }
   }
 });

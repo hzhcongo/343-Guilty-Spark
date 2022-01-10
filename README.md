@@ -1,21 +1,28 @@
-## Setup
+# Hessian Gang Discord Bot
 
-First of all, click on the "Lock" icon in the tab on the left. It will show you your repl's secrets. On this tab, add a new secret, set its name to `TOKEN` and its value to your discord bot token from the [discord developer dashboard](https://discord.com/developers/applications).
-Optionally, move to `index.js` and edit lines 6-12 (client configuration) as it suits you.
-Your bot is ready to launch!
+## About
+A Discord Bot that uses https://www.replit.com's discord.js starter template, and UptimeRobot to maintain hosting of the Discord Bot's web server.
 
-## Configuration
+Followed https://www.freecodecamp.org/news/create-a-discord-bot-with-javascript-nodejs/ guide
 
-In the `config.js` file, you can edit your bot's command prefix as per your choice.
+## Features
+1. [x] Replaces anti-gay speech to intelligent human speech 
+2. [ ] Kick users who are too anti-gay out of the Discord Server
 
 ## Commands
 
-The bot by default has 3 commands.
+> **-help** -> Shows the list of commands or details of a specific command.
 
-**help** - Shows the list of commands or details of a specific command.
-**say**  - Repeats whatever the users tells it to.
-**ping** - Checks connectivity with discord servers.
+---
 
+>**-say / -repeat** -> Repeats whatever the users tells it to.
+
+---
+
+>**-ping** -> Checks connectivity with discord servers.
+
+---
+### Note
 You can edit these commands and add more in `index.js` file.
 The help command also depends on the `help.js` file. This file contains the data that the help command displays.
 
@@ -34,9 +41,3 @@ Here, `command-name` is the name of your command. `aliases` is an array of comma
 Nextly, `description` and `format` field are necessary or it will break the help command.
 `description` is a short description of what the command does.
 `format` shows how is the user supposed to use the command. The first word is always the command name (`command-name`) followed by the arguments separated by a space (` `). The optional command arguments are enclosed within square brackets (`[]`) and the required arguments are enclosed within angular brackets (`<>`). The prefix is automatically added while displayng in the help command so be sure to not use it here.
-
----
-
-## Hosting
-
-The `server.js` file creates an HTTP server which in turn, generates a URL of the format `https://my-repl-name--my-username.repl.co` that you can ping using services such as uptimerobot. If you have the hacker plan, you can skip this and use the `Always on repl` feature.

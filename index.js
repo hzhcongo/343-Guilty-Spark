@@ -1,6 +1,7 @@
 const { Client, MessageEmbed } = require('discord.js');
 const config = require('./config');
 const commands = require('./help');
+const keepAlive = require("./server");
 
 let bot = new Client({
   fetchAllMembers: true, // Remove this if the bot is in large guilds.
@@ -74,7 +75,8 @@ bot.on('message', async message => {
     for (var i in blacklisted) {
       if (message.content.toLowerCase().includes(blacklisted[i].toLowerCase())) {
         await message.delete();
-        await message.reply(replacementWords[Math.floor(Math.random() * replacementWords.length)]);
+        await message.reply('is trying to say in intelligent human speech: "' + replacementWords[Math.floor(Math.random() * replacementWords.length)] + '"');
+        
         console.log(message.author + " is vulgar");
         
         break;
@@ -83,5 +85,7 @@ bot.on('message', async message => {
   }
 });
 
-require('./server')();
 bot.login(config.token);
+
+// To keep web server up via Uptime Robot
+keepAlive();

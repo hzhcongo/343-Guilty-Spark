@@ -1,32 +1,32 @@
-# Hessian Gang Discord Bot
+# 343 Guilty Spark Discord Bot
 
 ## About
-A Discord Bot that uses https://www.replit.com's discord.js starter template, and UptimeRobot to maintain hosting of the Discord Bot's web server.
+A Discord Bot that does things.
 
-Followed https://www.freecodecamp.org/news/create-a-discord-bot-with-javascript-nodejs/ guide
+### Things and stuff that it depends on:
+
+1. [FreeCodeCamp](https://www.freecodecamp.org/news/create-a-discord-bot-with-javascript-nodejs/) guide
+
+1. [Replit's](https://www.replit.com) and it's discord.js starter template for easy quickstart on Discord Bot and discord.js
+
+1. [UptimeRobot's](https://uptimerobot.com/) to maintain hosting of the Discord Bot's web server.
+
+1. [Autocode Halo Infinite API](https://autocode.com/lib/halo/infinite/) for  Halo Infinite stats retrieval
+
 
 ## Features
 1. [x] Blocks anti-gay speech and other forbidden words 
 1. [x] Teach bot forbidden words
-1. [ ] Unteach bot forbidden words
-1. [ ] Kick users who are too anti-gay into 'Jail' text channel for 1 day
-1. [ ] Show Halo Infinite Multiplayer stats
+1. [x] Unteach bot forbidden words
+1. [ ] Kick users who are too anti-gay into a Discord jail text channel for 1 day
+1. [x] Show Halo Infinite Multiplayer stats - Phase 1 (KDA, KDR, Total Score, Win Rate, "Noobness")
+1. [ ] Show Halo Infinite Multiplayer stats - Phase 2 (Medals, Betrayals, Suicides, Vehicles Destroyed, Vehicles Hijacked)
+1. [ ] Show Halo Infinite Multiplayer stats - Phase 3 (Beautify)
+1. [ ] Show Halo Infinite Multiplayer Medal breakdown
+1. [ ] Show Halo Infinite Multiplayer profile appearance along with any Halo Infinite Multiplayer commands
 
 ## Commands
-
-> **-help** -> Shows the list of commands or details of a specific command.
-
----
-
->**-say / -repeat** -> Repeats whatever the users tells it to.
-
----
-
->**-ping** -> Checks connectivity with discord servers.
-
----
-### Note
-You can edit these commands and add more in `index.js` file.
+You can edit commands and add more in `index.js` file.
 The help command also depends on the `help.js` file. This file contains the data that the help command displays.
 
 After creating a new command in `index.js`, go to `help.js` and add a new key-value pair to the JSON Object in the format shown below.

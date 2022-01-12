@@ -2,6 +2,7 @@ const { Client, MessageEmbed } = require('discord.js');
 const config = require('./config');
 const commands = require('./help');
 const keepAlive = require("./server");
+const lib = require('lib')({token: 'tok_dev_TxPfuZbNMwSyBLCYxVv6s9F9jXrmA1URYhmgfa8F1HMjWgbPjFEdgEJrRGfMed8b'});
 
 let bot = new Client({
   fetchAllMembers: true, // Remove this if the bot is in large guilds.
@@ -19,7 +20,18 @@ bot.once('ready', () => console.log(`Logged in as ${bot.user.tag}.`));
 let blacklistedWords = ['gay', 'g a y', 'g ay', 'ga y', 'g-a-y', 'g_a_y', 'g.a.y', 'ogay', 'dicks', 'cb', 'knn', 'wtf'];
 
 bot.on('message', async message => {
-  // Check for command
+  // Initialise semi-dependant logics
+  const replyHaloStats = (kda, kdr, totalScore, winRate) => {
+    message.reply(
+      "KDA: " + kda + "\n" +
+      "KDR: " + kdr + "\n" +
+      "Total score: " + totalScore + "\n" +
+      "Win rate: " + winRate + "%\n" +
+      "Noobness: 100%" 
+    );
+  }
+
+  // Command logic
   if (message.content.startsWith(config.prefix)) {
     let args = message.content.slice(config.prefix.length).split(' ');
     let command = args.shift().toLowerCase();
@@ -66,6 +78,19 @@ bot.on('message', async message => {
             message.reply('Why would you unteach me nothing?')
           break
 
+        case 'pvp':
+        case 'social':
+        case 'ranked':
+        case 'bots':
+        case 'custom':
+          let result = await lib.halo.infinite['@0.3.5'].stats['service-record'].multiplayer({
+            gamertag: args.join(' '),
+            filter: command === 'custom' ? command : 'matchmade:' + command
+          });
+          
+          replyHaloStats(result.data.core.kda, result.data.core.kdr, result.data.core.total_score, result.data.win_rate);
+          break;
+
         /* Unless you know what you're doing, don't change this command. */
         case 'help':
           let embed = new MessageEmbed()
@@ -100,8 +125,10 @@ bot.on('message', async message => {
       console.log(e);
       message.reply('Rampancy: ' + e)
     }
+    ////
+
+  // Forbidden word check
   } else if (message.author != bot.user) {
-    // Forbidden word check
 
     for (var i in blacklistedWords) {
       if (message.content.toLowerCase().includes(blacklistedWords[i].toLowerCase())) {
@@ -114,6 +141,7 @@ bot.on('message', async message => {
       }
     }
   }
+  ////
 });
 
 bot.login(config.token);

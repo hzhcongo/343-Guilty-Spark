@@ -6,8 +6,11 @@ A Discord Bot that uses https://www.replit.com's discord.js starter template, an
 Followed https://www.freecodecamp.org/news/create-a-discord-bot-with-javascript-nodejs/ guide
 
 ## Features
-1. [x] Replaces anti-gay speech to intelligent human speech 
-2. [ ] Kick users who are too anti-gay out of the Discord Server
+1. [x] Blocks anti-gay speech and other forbidden words 
+1. [x] Teach bot forbidden words
+1. [ ] Unteach bot forbidden words
+1. [ ] Kick users who are too anti-gay into 'Jail' text channel for 1 day
+1. [ ] Show Halo Infinite Multiplayer stats
 
 ## Commands
 

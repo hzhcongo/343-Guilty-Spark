@@ -2,7 +2,7 @@ const { Client, MessageEmbed } = require('discord.js');
 const config = require('./config');
 const commands = require('./help');
 const keepAlive = require("./server");
-const lib = require('lib')({token: 'tok_dev_TxPfuZbNMwSyBLCYxVv6s9F9jXrmA1URYhmgfa8F1HMjWgbPjFEdgEJrRGfMed8b'});
+const lib = require('lib')({token: process.env['AUTOCODE_TOKEN']});
 
 let bot = new Client({
   fetchAllMembers: true, // Remove this if the bot is in large guilds.
@@ -20,16 +20,68 @@ bot.once('ready', () => console.log(`Logged in as ${bot.user.tag}.`));
 let blacklistedWords = ['gay', 'g a y', 'g ay', 'ga y', 'g-a-y', 'g_a_y', 'g.a.y', 'ogay', 'dicks', 'cb', 'knn', 'wtf'];
 
 bot.on('message', async message => {
+
   // Initialise semi-dependant logics
-  const replyHaloStats = (kda, kdr, totalScore, winRate) => {
-    message.reply(
-      "KDA: " + kda + "\n" +
-      "KDR: " + kdr + "\n" +
-      "Total score: " + totalScore + "\n" +
-      "Win rate: " + winRate + "%\n" +
-      "Noobness: 100%" 
+  const parseMedalsBreakdown = (medalsBreakdown) => {
+    const top3Medals = [medalsBreakdown[0], medalsBreakdown[1], medalsBreakdown[2]];
+
+    for (i = 3; i < medalsBreakdown.length; i++) {
+      for (j = 0; j < top3Medals.length; j++) {
+        if (medalsBreakdown[i].count > top3Medals[j].count) {
+          console.log("replacing " + top3Medals[j] + " with " + medalsBreakdown[i]);
+          // top3Medals[j] = medalsBreakdown[i];
+          top3Medals.splice(j, 1, medalsBreakdown[i]);
+          console.log("replaced to:" + top3Medals[j]);
+          break;
+        }
+      }
+    }
+
+    return top3Medals;
+  }
+
+  const replyHaloStats = (stats) => {
+    const { core, matches_played, win_rate } = stats;
+    const { kda, kdr, medals, total_score, summary, shots, breakdowns } = core;
+    const top3Medals = parseMedalsBreakdown(breakdowns.medals);
+
+    message.channel.send(
+      "---------------\n" +
+      "- KDA: " + kda.toString().substring(0,8) + "\n" +
+      "- KDR: " + kdr.toString().substring(0,8) + "\n" +
+      "- Total score: " + total_score + "\n" +
+      "- Win rate: " + win_rate.toString().substring(0,8) + "%\n" +
+      "- Accuracy: " + shots.accuracy.toString().substring(0,8) + "%\n" + 
+      "---------------\n" +
+      // TODO Summary
+        // Average kills / deaths / assists / vehicles destoryed / vehicles hijacked / medals per game
+        // betrayals / suicides 
+      "- Kills/game: " + (summary.kills / matches_played).toString().substring(0,8) + "\n" +
+      "|- Melee-kills/game: " + (breakdowns.kills.melee / matches_played).toString().substring(0,8) + "\n" +
+      "|- Nade-kills/game: " + (breakdowns.kills.grenades / matches_played).toString().substring(0,8) + "\n" +
+      "|- Headshot-kills/game: " + (breakdowns.kills.headshots / matches_played).toString().substring(0,8) + "\n" +
+      "- Deaths/game: " + (summary.deaths / matches_played).toString().substring(0,8) + "\n" +
+      "- Assists/game: " + (summary.assists / matches_played).toString().substring(0,8) + "\n" +
+      "|- Driver-assists/game: " + (breakdowns.assists.driver / matches_played).toString().substring(0,8) + "\n" +
+      "- Vehicle-hijacks/game: " + (summary.vehicles.hijacks / matches_played).toString().substring(0,8) + "\n" +
+      "- Vehicle-kills/game: " + (summary.vehicles.destroys / matches_played).toString().substring(0,8) + "\n" +
+      "- Medals/game: " + (summary.medals / matches_played).toString().substring(0,8) + "\n" +
+      "- Betrayals: " + (summary.betrayals) + "\n" +
+      "- Suicides: " + (summary.suicides) + "\n" +
+      "---------------\n" +
+      "Top 3 medals:\n" +
+      top3Medals[0].name + " (" + top3Medals[0].count + ")\n" +
+      top3Medals[1].name + " (" + top3Medals[1].count + ")\n" +
+      top3Medals[2].name + " (" + top3Medals[2].count + ")\n" +
+      "---------------\n",
+      {files: [
+        top3Medals[0].image_urls.small,
+        top3Medals[1].image_urls.small,
+        top3Medals[2].image_urls.small,
+      ]}
     );
   }
+  ////
 
   // Command logic
   if (message.content.startsWith(config.prefix)) {
@@ -88,7 +140,7 @@ bot.on('message', async message => {
             filter: command === 'custom' ? command : 'matchmade:' + command
           });
           
-          replyHaloStats(result.data.core.kda, result.data.core.kdr, result.data.core.total_score, result.data.win_rate);
+          replyHaloStats(result.data);
           break;
 
         /* Unless you know what you're doing, don't change this command. */
@@ -125,7 +177,6 @@ bot.on('message', async message => {
       console.log(e);
       message.reply('Rampancy: ' + e)
     }
-    ////
 
   // Forbidden word check
   } else if (message.author != bot.user) {
@@ -143,6 +194,7 @@ bot.on('message', async message => {
   }
   ////
 });
+////
 
 bot.login(config.token);
 

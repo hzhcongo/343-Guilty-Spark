@@ -18,12 +18,14 @@ A Discord Bot that does things.
 1. [x] Blocks anti-gay speech and other forbidden words 
 1. [x] Teach bot forbidden words
 1. [x] Unteach bot forbidden words
+1. [ ] Manage forbidden words for each Discord server through Replit database
 1. [ ] Kick users who are too anti-gay into a Discord jail text channel for 1 day
 1. [x] Show Halo Infinite Multiplayer stats - Phase 1 (KDA, KDR, Total Score, Win Rate, "Noobness")
-1. [ ] Show Halo Infinite Multiplayer stats - Phase 2 (Medals, Betrayals, Suicides, Vehicles Destroyed, Vehicles Hijacked)
-1. [ ] Show Halo Infinite Multiplayer stats - Phase 3 (Beautify)
-1. [ ] Show Halo Infinite Multiplayer Medal breakdown
-1. [ ] Show Halo Infinite Multiplayer profile appearance along with any Halo Infinite Multiplayer commands
+1. [x] Show Halo Infinite Multiplayer stats - Phase 2 (Medals, Betrayals, Suicides, Vehicles Destroyed, Vehicles Hijacked)
+1. [x] Show Halo Infinite Multiplayer stats - Phase 2 (Top 3 medals)
+1. [ ] Show Halo Infinite Multiplayer stats - Phase 3 (Top 3 medals for each rarity)
+1. [ ] Show Halo Infinite Multiplayer stats - Phase 4 (Profile appearance)
+1. [ ] Show Halo Infinite Multiplayer stats - Phase 4 (Beautify)
 
 ## Commands
 You can edit commands and add more in `index.js` file.
